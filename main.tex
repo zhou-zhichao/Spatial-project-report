@@ -56,7 +56,13 @@ In spatial modelling, the covariance function, or kernel, controls how observati
 
 \subsection{Stationary and Nonstationary Kernels}
 
-% Explain stationary and nonstationary kernels here.
+A random field is weakly stationary if its mean is constant and its covariance depends only on the displacement between two locations. In this case, the covariance can be written as
+\begin{equation}
+  C(\mathbf{s}, \mathbf{t}) = C_0(\mathbf{t}-\mathbf{s}),
+\end{equation}
+or equivalently as $C(\mathbf{h})$ for a spatial lag $\mathbf{h}$. If the covariance depends only on the Euclidean distance $\|\mathbf{h}\|$, the model is also isotropic. Common stationary kernels include the squared exponential and Mat\'ern covariance functions.
+
+A nonstationary kernel relaxes this assumption by allowing the covariance to depend on the actual locations, not only on their separation. This is useful when the spatial dependence structure changes across the domain, for example when different regions have different smoothness or correlation ranges. The selected paper argues that relying on a limited class of stationary kernels can restrict model expressiveness, and proposes nonstationary Fourier features as a way to learn richer covariance structures directly from data \citep{ton2018spatial}.
 
 \subsection{Fourier Features}
 

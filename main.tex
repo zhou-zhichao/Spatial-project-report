@@ -83,7 +83,9 @@ The selected paper points out that spatial modelling has often relied on ``a lim
 
 \subsection{Fourier Features}
 
-% Explain Fourier features here.
+Bochner's theorem states that every continuous stationary covariance function has a spectral representation, and conversely every such spectral representation defines a valid stationary covariance function. Thus, stationary covariance modelling can be done either in the spatial domain through covariance decay in space, or in frequency space through a spectral measure or spectral density.
+
+This spectral viewpoint is the basis for Fourier feature methods. Instead of representing a kernel only as a function of spatial lag, one can represent it through sine and cosine components associated with different frequencies. The selected paper builds on this idea: it uses Fourier feature representations to construct flexible kernels, and then extends the approach from stationary kernels to nonstationary Fourier features that can be learned from data \citep{ton2018spatial}.
 
 \section{Method}
 

@@ -83,9 +83,9 @@ The selected paper points out that spatial modelling has often relied on ``a lim
 
 \subsection{Fourier Features}
 
-Bochner's theorem states that every continuous stationary covariance function has a spectral representation, and conversely every such spectral representation defines a valid stationary covariance function. Thus, stationary covariance modelling can be done either in the spatial domain through covariance decay in space, or in frequency space through a spectral measure or spectral density.
+Bochner's theorem gives the spectral view of stationary covariance modelling. In the course material, its meaning is summarized as follows: every continuous stationary covariance function has a spectral representation; conversely, every such spectral representation defines a valid stationary covariance function. Thus, stationary covariance modelling can be done either in the spatial domain, through covariance decay in space, or in frequency space, through the spectral measure or density.
 
-This spectral viewpoint is the basis for Fourier feature methods. Instead of representing a kernel only as a function of spatial lag, one can represent it through sine and cosine components associated with different frequencies. The selected paper builds on this idea: it uses Fourier feature representations to construct flexible kernels, and then extends the approach from stationary kernels to nonstationary Fourier features that can be learned from data \citep{ton2018spatial}.
+The selected paper connects this spectral view to Fourier features. It states that recent machine learning research has focused on ``spectral representations to model arbitrary stationary kernels'' and on more general representations including nonstationary kernels \citep[p.~59]{ton2018spatial}. The paper then uses ``the connections between Fourier feature representations, Gaussian processes and neural networks'' to develop a framework that can learn complex nonstationary kernel functions directly from data \citep[p.~59]{ton2018spatial}.
 
 \section{Method}
 

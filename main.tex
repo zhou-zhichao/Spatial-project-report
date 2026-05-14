@@ -48,7 +48,11 @@ The use of covariance kernels is ubiquitous in the field of spatial statistics. 
 
 \subsection{Gaussian Processes}
 
-% Explain Gaussian processes here.
+A Gaussian process is a stochastic process in which every finite collection of indexed random variables follows a multivariate normal distribution. It can therefore be understood as a probability distribution over functions on a continuous domain, such as time or space \citep{wikipediaGaussianProcess}. A Gaussian process is usually specified by a mean function and a covariance function:
+\begin{equation}
+  f(\mathbf{x}) \sim \mathcal{GP}\left(m(\mathbf{x}), k(\mathbf{x}, \mathbf{x}')\right).
+\end{equation}
+In spatial modelling, the covariance function, or kernel, controls how observations at different locations are related. This is why kernel design is central to Gaussian process models and why the selected paper focuses on learning more flexible nonstationary kernels.
 
 \subsection{Stationary and Nonstationary Kernels}
 

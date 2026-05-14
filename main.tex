@@ -71,17 +71,17 @@ The use of covariance kernels is ubiquitous in the field of spatial statistics. 
 
 \begin{table}[h]
   \centering
-  \caption{Summary of experiments. Fill in details from the paper.}
+  \caption{Summary of experiments reported by \citet[sec.~4]{ton2018spatial}.}
   \begin{tabular}{p{0.22\linewidth}p{0.35\linewidth}p{0.34\linewidth}}
     \toprule
     Experiment & Dataset & Result/Observation \\
     \midrule
     Google daily high stock price &
-    Daily high stock price of Google, 3295 days from 19 August 2004 to 20 September 2017; $y=\log(\text{Stock}_{high})$ \citep[sec.~4.1]{ton2018spatial}. &
-    Nonstationary Fourier features: MSE $3.29\times10^{-4}$, correlation $0.999$; vanilla random Fourier features: MSE $5.69\times10^{-4}$, correlation $0.987$ \citep[p.~68]{ton2018spatial}. \\
+    Daily high stock price of Google, 3295 days from 19 August 2004 to 20 September 2017; $y=\log(\text{Stock}_{high})$. &
+    Nonstationary Fourier features: MSE $3.29\times10^{-4}$, correlation $0.999$; vanilla random Fourier features: MSE $5.69\times10^{-4}$, correlation $0.987$. \\
     Spatial temperature anomaly for East Africa in 2016 &
-    MOD11A2 Land Surface Temperature 8-day composite data, averaged to yearly mean for 2016; 6000 sampled LST locations, using latitude and longitude as covariates \citep[sec.~4.2]{ton2018spatial}. &
-    Mean absolute error: proposed approach $3.5$, MRA $3.5$, SPDE $3.9$, LatticeKrig $4.3$ \citep[p.~70]{ton2018spatial}. \\
+    MOD11A2 Land Surface Temperature 8-day composite data, averaged to yearly mean for 2016; 6000 sampled LST locations, using latitude and longitude as covariates. &
+    Mean absolute error: proposed approach $3.5$, MRA $3.5$, SPDE $3.9$, LatticeKrig $4.3$. \\
     \bottomrule
   \end{tabular}
 \end{table}

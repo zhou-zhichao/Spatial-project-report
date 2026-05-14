@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{csquotes}
 \usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{enumitem}
@@ -28,130 +29,96 @@
 \maketitle
 
 \begin{abstract}
-This report reviews the paper ``Spatial mapping with Gaussian processes and nonstationary Fourier features'' by \citet{ton2018spatial}. The paper proposes a framework for learning expressive nonstationary covariance structures for Gaussian process models using Fourier feature representations. In this report, we summarize the motivation, core methodology, experimental setup, results, strengths, limitations, and possible extensions of the work.
+% Write your abstract here.
 \end{abstract}
+
+\section{Paper Information}
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Selected paper:} ``Spatial mapping with Gaussian processes and nonstationary Fourier features''
+  \item \textbf{Authors:} Jean-Francois Ton, Seth Flaxman, Dino Sejdinovic, and Samir Bhatt
+  \item \textbf{Journal:} Spatial Statistics, Volume 28, pages 59--78, 2018
+  \item \textbf{DOI:} \url{https://doi.org/10.1016/j.spasta.2018.02.002}
+\end{itemize}
 
 \section{Introduction}
 
-Spatial statistics studies data indexed by location, where nearby observations are often statistically dependent. Gaussian processes are widely used for spatial mapping because they provide flexible nonlinear regression models together with uncertainty estimates. A key part of a Gaussian process model is the covariance kernel, which determines how similarity between inputs is represented.
+% Introduce the selected paper/topic here.
+% Use citations when referring to claims from the paper, for example: \citet{ton2018spatial}.
 
-Many traditional spatial models rely on stationary kernels, such as the squared exponential or Matérn kernel. Stationary kernels assume that covariance depends only on the distance between locations, not on the absolute location itself. This assumption can be restrictive in real spatial applications where different regions may have different smoothness, variability, or correlation patterns.
+\section{Motivation}
 
-The selected paper addresses this issue by introducing a framework based on nonstationary Fourier features. The goal is to learn richer covariance functions directly from data while keeping the computational cost manageable.
+% Explain why this topic is important.
+
+\begin{quote}
+``The use of covariance kernels is ubiquitous in the field of spatial statistics'' \citep[p.~59]{ton2018spatial}.
+\end{quote}
 
 \section{Background}
 
+% Add necessary background here.
+
 \subsection{Gaussian Processes}
 
-A Gaussian process defines a distribution over functions. For an input location $\mathbf{x}$, the function value $f(\mathbf{x})$ is modeled so that any finite collection of function values follows a multivariate Gaussian distribution:
-\begin{equation}
-  f(\mathbf{x}) \sim \mathcal{GP}(m(\mathbf{x}), k(\mathbf{x}, \mathbf{x}')),
-\end{equation}
-where $m(\mathbf{x})$ is the mean function and $k(\mathbf{x}, \mathbf{x}')$ is the covariance kernel.
-
-In regression, observations are commonly modeled as
-\begin{equation}
-  y_i = f(\mathbf{x}_i) + \epsilon_i,
-\end{equation}
-where $\epsilon_i$ is observation noise.
+% Explain Gaussian processes here.
 
 \subsection{Stationary and Nonstationary Kernels}
 
-A stationary kernel depends only on the difference between two inputs:
-\begin{equation}
-  k(\mathbf{x}, \mathbf{x}') = k(\mathbf{x} - \mathbf{x}').
-\end{equation}
-This property is mathematically convenient but can be unrealistic for spatial data with locally varying structure.
+% Explain stationary and nonstationary kernels here.
 
-A nonstationary kernel allows covariance to depend on the actual locations:
-\begin{equation}
-  k(\mathbf{x}, \mathbf{x}') = k(\mathbf{x}, \mathbf{x}').
-\end{equation}
-Such kernels can represent spatial processes whose behavior changes across the domain.
+\subsection{Fourier Features}
 
-\section{Summary of the Paper}
+% Explain Fourier features here.
 
-\subsection{Main Problem}
+\section{Method}
 
-The paper focuses on improving spatial mapping by moving beyond simple stationary kernels. The authors argue that although Gaussian processes are powerful, their practical expressiveness is often limited by the kernel family chosen before training.
+% Summarize the method proposed in the paper.
 
-\subsection{Main Idea}
+\section{Experiments}
 
-The main idea is to use Fourier feature representations to construct flexible kernel functions. Random Fourier features are commonly used to approximate stationary kernels efficiently. The paper extends this direction by using nonstationary Fourier features, allowing the model to learn more complex covariance behavior from data.
-
-\subsection{Method Overview}
-
-At a high level, the method can be described as follows:
-
-\begin{enumerate}[label=\arabic*.]
-  \item Map spatial inputs into a feature representation based on Fourier features.
-  \item Allow the feature transformation to vary with input location.
-  \item Use the resulting features inside a Gaussian process-style model.
-  \item Train the model while controlling overfitting through regularization techniques inspired by deep learning.
-\end{enumerate}
-
-This approach aims to preserve computational efficiency while increasing the flexibility of the covariance structure.
-
-\section{Experiments and Results}
-
-The paper evaluates the proposed framework on both a time series dataset and a remote sensing problem involving land surface temperature in Eastern Africa. These experiments are used to compare stationary and nonstationary modeling choices.
-
-\subsection{Experimental Setup}
-
-In this section, describe the datasets, baselines, evaluation metrics, and training procedure used in the paper.
-
-\begin{itemize}
-  \item Dataset 1: Briefly describe the time series task.
-  \item Dataset 2: Briefly describe the land surface temperature mapping task.
-  \item Baselines: List the stationary kernels or competing models used for comparison.
-  \item Metrics: State the predictive accuracy or likelihood-based metrics used.
-\end{itemize}
-
-\subsection{Key Findings}
-
-The main finding is that nonstationary kernels can improve generalization performance without increasing computational or storage complexity. The paper also reports that learned nonstationary structures can provide more interpretable spatial behavior.
+% Summarize the experiments from the paper.
 
 \begin{table}[h]
   \centering
-  \caption{Example structure for summarizing experimental results. Replace the placeholder values with numbers from the paper.}
+  \caption{Summary of experiments. Fill in details from the paper.}
   \begin{tabular}{lll}
     \toprule
-    Model & Dataset & Main Observation \\
+    Experiment & Dataset & Result/Observation \\
     \midrule
-    Stationary GP & Placeholder & Placeholder \\
-    Nonstationary Fourier Features & Placeholder & Placeholder \\
+     &  &  \\
+     &  &  \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\section{Critical Discussion}
+\section{Discussion}
+
+% Discuss strengths, limitations, and your group's interpretation.
 
 \subsection{Strengths}
 
-The paper has several strengths. First, it addresses an important limitation of standard Gaussian process models in spatial statistics. Second, it connects ideas from Gaussian processes, Fourier features, and neural networks in a unified framework. Third, the method is designed to remain computationally practical.
+% Add strengths here.
 
 \subsection{Limitations}
 
-Possible limitations include the added complexity of model design and training, the need for careful regularization, and the challenge of interpreting highly flexible learned kernels. The experiments demonstrate promising results, but further testing on more spatial datasets would help clarify when the method is most useful.
+% Add limitations here.
 
 \subsection{Possible Extensions}
 
-Future work could explore applications to other spatial domains, such as environmental monitoring, disease mapping, traffic modeling, or climate data analysis. Another possible extension is to compare the method with more recent scalable Gaussian process or deep kernel learning approaches.
+% Add possible extensions here.
 
 \section{Conclusion}
 
-The selected paper presents an expressive and computationally efficient approach for nonstationary spatial modeling. By extending Fourier feature representations, the authors show that Gaussian process models can move beyond fixed stationary kernels and better adapt to complex spatial patterns. Overall, the work is valuable because it improves the flexibility of spatial mapping while preserving many advantages of Gaussian process modeling.
+% Write the conclusion here.
 
-\section*{Oral Presentation Plan}
-
-The oral presentation can be organized as follows:
+\section*{Oral Presentation Outline}
 
 \begin{enumerate}[label=\arabic*.]
-  \item Motivation: Why stationary kernels can be limiting.
-  \item Background: Gaussian processes and Fourier features.
-  \item Method: How nonstationary Fourier features are used.
-  \item Experiments: Datasets, baselines, and results.
-  \item Discussion: Strengths, limitations, and possible extensions.
+  \item Introduction and motivation
+  \item Background
+  \item Method
+  \item Experiments and results
+  \item Discussion and conclusion
 \end{enumerate}
 
 \bibliographystyle{plainnat}

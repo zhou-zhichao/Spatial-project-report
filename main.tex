@@ -56,13 +56,17 @@ In spatial modelling, the covariance function, or kernel, controls how observati
 
 \subsection{Stationary and Nonstationary Kernels}
 
-A random field is weakly stationary if its mean is constant and its covariance depends only on the displacement between two locations. In this case, the covariance can be written as
+A random field is called weakly stationary if its mean is constant and its covariance depends only on the displacement between two locations:
 \begin{equation}
   C(\mathbf{s}, \mathbf{t}) = C_0(\mathbf{t}-\mathbf{s}),
 \end{equation}
-or equivalently as $C(\mathbf{h})$ for a spatial lag $\mathbf{h}$. If the covariance depends only on the Euclidean distance $\|\mathbf{h}\|$, the model is also isotropic. Common stationary kernels include the squared exponential and Mat\'ern covariance functions.
+for some function $C_0$. In the weakly stationary case, one often writes
+\begin{equation}
+  C(\mathbf{h}) = C_0(\mathbf{h}) = C(\mathbf{s}, \mathbf{s}+\mathbf{h}),
+\end{equation}
+where $\mathbf{h}$ is the spatial lag. If the covariance depends only on the Euclidean distance $\|\mathbf{h}\|$, the model is also isotropic.
 
-A nonstationary kernel relaxes this assumption by allowing the covariance to depend on the actual locations, not only on their separation. This is useful when the spatial dependence structure changes across the domain, for example when different regions have different smoothness or correlation ranges. The selected paper argues that relying on a limited class of stationary kernels can restrict model expressiveness, and proposes nonstationary Fourier features as a way to learn richer covariance structures directly from data \citep{ton2018spatial}.
+The selected paper points out that spatial modelling has often relied on ``a limited class of stationary kernels such as the Mat\'ern or squared exponential,'' which can limit the expressiveness of the model \citep[p.~59]{ton2018spatial}. In contrast, nonstationary kernels allow the covariance structure to vary with location. The paper therefore considers more general spectral representations and proposes a framework to learn complex nonstationary kernel functions directly from data \citep{ton2018spatial}.
 
 \subsection{Fourier Features}
 

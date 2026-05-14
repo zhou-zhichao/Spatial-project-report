@@ -69,16 +69,16 @@ The use of covariance kernels is ubiquitous in the field of spatial statistics. 
 \begin{table}[H]
   \centering
   \caption{Summary of experiments reported by \citet[sec.~4]{ton2018spatial}.}
-  \begin{tabular}{p{0.22\linewidth}p{0.35\linewidth}p{0.34\linewidth}}
+  \begin{tabular}{p{0.28\linewidth}p{0.33\linewidth}p{0.30\linewidth}}
     \toprule
-    Experiment & Dataset & Result/Observation \\
+    Task & Data & Main result \\
     \midrule
-    Google daily high stock price &
-    Daily high stock price of Google, 3295 days from 19 August 2004 to 20 September 2017; $y=\log(\text{Stock}_{high})$. &
-    Nonstationary Fourier features: MSE $3.29\times10^{-4}$, correlation $0.999$; vanilla random Fourier features: MSE $5.69\times10^{-4}$, correlation $0.987$. \\
-    Spatial temperature anomaly for East Africa in 2016 &
-    MOD11A2 Land Surface Temperature 8-day composite data, averaged to yearly mean for 2016; 6000 sampled LST locations, using latitude and longitude as covariates. &
-    Mean absolute error: proposed approach $3.5$, MRA $3.5$, SPDE $3.9$, LatticeKrig $4.3$. \\
+    Google stock price &
+    3295 daily observations from 19 August 2004 to 20 September 2017. &
+    Proposed method: MSE $3.29\times10^{-4}$, correlation $0.999$. \\
+    East Africa temperature anomaly &
+    MOD11A2 land surface temperature data with 6000 sampled locations. &
+    Proposed method and MRA: MAE $3.5$; SPDE: $3.9$; LatticeKrig: $4.3$. \\
     \bottomrule
   \end{tabular}
 \end{table}

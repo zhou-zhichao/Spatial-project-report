@@ -48,11 +48,24 @@ The use of covariance kernels is ubiquitous in the field of spatial statistics. 
 
 \subsection{Gaussian Processes}
 
-A Gaussian process is a stochastic process in which every finite collection of indexed random variables follows a multivariate normal distribution. It can therefore be understood as a probability distribution over functions on a continuous domain, such as time or space \citep{wikipediaGaussianProcess}. A Gaussian process is usually specified by a mean function and a covariance function:
+A random field is a collection of random variables
 \begin{equation}
-  f(\mathbf{x}) \sim \mathcal{GP}\left(m(\mathbf{x}), k(\mathbf{x}, \mathbf{x}')\right).
+  X = \{X(\mathbf{s}) : \mathbf{s}\in S\},
 \end{equation}
-In spatial modelling, the covariance function, or kernel, controls how observations at different locations are related. This is why kernel design is central to Gaussian process models and why the selected paper focuses on learning more flexible nonstationary kernels.
+indexed by a set $S$ of locations. It is described through its finite-dimensional distributions, that is, through the distributions of vectors of the form
+\begin{equation}
+  \left(X(\mathbf{s}_1), \ldots, X(\mathbf{s}_d)\right),
+  \qquad \mathbf{s}_1,\ldots,\mathbf{s}_d\in S.
+\end{equation}
+A Gaussian random field is a random field such that every such finite-dimensional random vector has a multivariate Gaussian distribution. Any Gaussian random field is completely determined by its mean function
+\begin{equation}
+  m(\mathbf{s}) = \mathbb{E}[X(\mathbf{s})]
+\end{equation}
+and covariance function
+\begin{equation}
+  C(\mathbf{s},\mathbf{t}) = \operatorname{Cov}(X(\mathbf{s}),X(\mathbf{t})).
+\end{equation}
+In this report, Gaussian processes are used in this same finite-dimensional sense. Since the covariance function controls spatial dependence, kernel design is central to Gaussian process models.
 
 \subsection{Stationary and Nonstationary Kernels}
 

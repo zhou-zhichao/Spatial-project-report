@@ -168,7 +168,57 @@ where $\odot$ denotes elementwise multiplication and $\sigma_p$ controls the reg
 
 \section{Experiments}
 
-% Summarize the experiments from the paper.
+The paper evaluates the proposed method on two examples. The first one is a
+one-dimensional time series of Google stock prices, and the second one is a
+two-dimensional spatial mapping task for East African land surface temperature.
+Together, these examples show how the method behaves in both temporal and spatial
+settings.
+
+\subsection{Google Stock Prices}
+
+For the time series experiment, the authors use 3295 daily observations of the
+Google high stock price from 19 August 2004 to 20 September 2017. The response is
+the logarithm of the daily high stock price. The stationary baseline uses vanilla
+random Fourier features with a squared exponential kernel, while the proposed
+method learns nonstationary Fourier features from the data.
+
+The reported result shows that both methods fit the general trend well, but the
+nonstationary method gives a better fit in local regions where the smoothness of
+the time series changes. This is visible in Fig.~\ref{fig:google-stock}, where
+the proposed method follows the local variation more closely in the zoomed-in
+part of the series. Quantitatively, the proposed method obtains a lower mean
+squared error and a higher correlation than the vanilla random Fourier feature
+baseline.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\linewidth]{figures/paper-006.jpg}
+  \caption{Google stock price experiment reproduced from Ton et al.~\citep[fig.~3]{ton2018spatial}.}
+  \label{fig:google-stock}
+\end{figure}
+
+\subsection{East African Land Surface Temperature}
+
+The second experiment considers MOD11A2 land surface temperature data for East
+Africa in 2016. The authors randomly sample 6000 locations, which is only about
+5\% of the full spatial grid, and use latitude and longitude as the input
+coordinates. The goal is to predict the land surface temperature anomaly over the
+remaining spatial locations.
+
+This task is closer to a standard spatial mapping problem. The proposed method is
+compared with three spatial statistics methods: SPDE, LatticeKrig, and
+multi-resolution approximation (MRA). The proposed method has a mean absolute
+error comparable to MRA and better than SPDE and LatticeKrig. Fig.~\ref{fig:east-africa}
+also shows that the proposed method captures more local spatial detail than SPDE
+and LatticeKrig, although the paper notes that it does not capture fine-scale
+detail as well as MRA.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\linewidth]{figures/paper-009.jpg}
+  \caption{Predicted East African land surface temperature anomaly surfaces reproduced from Ton et al.~\citep[fig.~5]{ton2018spatial}.}
+  \label{fig:east-africa}
+\end{figure}
 
 \begin{table}[H]
   \centering
@@ -179,7 +229,7 @@ where $\odot$ denotes elementwise multiplication and $\sigma_p$ controls the reg
     \midrule
     Google stock price &
     3295 daily observations from 19 August 2004 to 20 September 2017. &
-    Proposed method: MSE $3.29\times10^{-4}$, correlation $0.999$. \\
+    Proposed method: MSE $3.29\times10^{-5}$, correlation $0.999$. \\
     East Africa temperature anomaly &
     MOD11A2 land surface temperature data with 6000 sampled locations. &
     Proposed method and MRA: MAE $3.5$; SPDE: $3.9$; LatticeKrig: $4.3$. \\

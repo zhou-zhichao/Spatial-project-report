@@ -168,19 +168,19 @@ where $\odot$ denotes elementwise multiplication and $\sigma_p$ controls the reg
 
 \section{Experiments}
 
-The paper evaluates the proposed method on two examples. The first one is a
-one-dimensional time series of Google stock prices, and the second one is a
-two-dimensional spatial mapping task for East African land surface temperature.
-Together, these examples show how the method behaves in both temporal and spatial
-settings.
+The experiments in the paper are quite different from each other. One is a
+Google stock price time series, and the other is a spatial prediction problem for
+East African land surface temperature. I think this is useful because the paper
+does not only test the method on one type of data.
 
 \subsection{Google Stock Prices}
 
-For the time series experiment, the authors use 3295 daily observations of the
-Google high stock price from 19 August 2004 to 20 September 2017. The response is
-the logarithm of the daily high stock price. The stationary baseline uses vanilla
-random Fourier features with a squared exponential kernel, while the proposed
-method learns nonstationary Fourier features from the data.
+In the first experiment, the data are the daily high prices of Google stock from
+19 August 2004 to 20 September 2017. The authors model the log high price and
+compare their nonstationary Fourier feature method with vanilla random Fourier
+features using a squared exponential kernel. The important point here is not only
+the prediction error, but also whether the method can adapt to changes in the
+smoothness of the time series.
 
 The reported result shows that both methods fit the general trend well, but the
 nonstationary method gives a better fit in local regions where the smoothness of
@@ -239,8 +239,6 @@ detail as well as MRA.
 
 \section{Discussion}
 
-% Discuss strengths, limitations, and your group's interpretation.
-
 \subsection{Strengths}
 
 \subsubsection{No additional computational cost}
@@ -250,7 +248,6 @@ millions of points, and this improves the time efficiency, while also lowering
 computer memory requirements.
 
 \subsubsection{Kernel learned directly from data}
-% Add strengths here.
 In the traditional approach, the hyperparameters need to be guessed before
 processing. For example,
 \begin{equation}
@@ -266,13 +263,35 @@ only be used for stationary kernels. This paper's proposed method can also be
 used for nonstationary kernels, which more precisely simulate and predict
 real-life applications, just like the temperature in East Africa shown in
 the experiment.
+
 \subsection{Limitations}
 
-% Add limitations here.
 \subsubsection{Fine-scale spatial detail not fully captured}
+
+The East African land surface temperature experiment also shows a limitation of
+the method. The proposed approach performs well in terms of mean absolute error,
+but the paper notes that it does not capture fine-scale spatial detail as well as
+the MRA approach. This suggests that the learned Fourier features are useful for
+large-scale nonstationary structure, but may still smooth over some local
+variation.
+
+A second issue is that the model has many frequency parameters. This gives the
+kernel more flexibility, but it also increases the risk of overfitting. Therefore,
+the regularisation steps, especially Gaussian dropout and early stopping, are an
+important part of the method rather than a small implementation detail.
+
 \subsection{Possible Extensions}
 
-% Add possible extensions here.
+The land surface temperature experiment only uses latitude and longitude as
+inputs. A natural extension would be to include more covariates, such as
+elevation or land-cover information. These variables may explain local changes in
+temperature that are difficult to learn from spatial coordinates alone.
+
+It would also be useful to study the choice of the number of Fourier features in
+more detail. More features can make the kernel more flexible and may help with
+finer spatial detail, but they also add more parameters. This connects directly
+to the overfitting issue discussed above, so the best choice of feature number may
+depend on the size and noise level of the dataset.
 
 \section{Conclusion}
 

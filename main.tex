@@ -90,6 +90,62 @@ The selected paper connects this spectral view to Fourier features. It states th
 \section{Method}
 
 % Summarize the method proposed in the paper.
+\subsection{Nonstationary Extension via Yaglom's Theorem}
+First, using the Random Fourier Features, write the kernel as an expectation.
+Approximate the expectation with Monte Carlo to sample $m$ frequencies. This
+gives a feature map. From the feature map, the cost drops from $O(n^3)$ to
+$O(nm^2)$ because we only need to invert a $2m \times 2m$ matrix instead of
+the $n \times n$ covariance matrix. However, there are two limitations: it
+can only be applied to stationary kernels, and the kernel family must be
+chosen first.
+
+Therefore, by extending to Yaglom's theorem, a nonstationary kernel is an
+integral over pairs of frequencies. Then by applying symmetrising and Monte
+Carlo integration, we get a new feature map again. Nonstationarity arises
+because $\boldsymbol{\omega}^1 \neq \boldsymbol{\omega}^2$ makes the kernel
+depend on $\mathbf{x}_1$ and $\mathbf{x}_2$ separately.
+\begin{equation}
+  k(\mathbf{x}_1, \mathbf{x}_2) = \int_{\mathbb{R}^D \times \mathbb{R}^D} e^{i(\boldsymbol{\omega}_1^\top \mathbf{x}_1 - \boldsymbol{\omega}_2^\top \mathbf{x}_2)} \, \mu(\mathrm{d}\boldsymbol{\omega}_1, \mathrm{d}\boldsymbol{\omega}_2).
+\end{equation}
+
+\begin{equation}
+  \Phi_x = \left[ \cos(X \Omega_1^\top) + \cos(X \Omega_2^\top) \;\big|\; \sin(X \Omega_1^\top) + \sin(X \Omega_2^\top) \right] \in \mathbb{R}^{n \times 2m}.
+\end{equation}
+Vanilla RFF samples frequencies from a fixed distribution. It would force us
+to choose a kernel family. Instead, we can treat the frequency pairs as free
+parameters and learn them from data. We can optimise the frequencies by ADAM
+gradient descent on the log marginal likelihood. Each iteration uses the
+current frequencies to build the feature map and compute the log marginal
+likelihood. Then backpropagate to get the gradient and update the frequencies
+again. $\Omega$ plays the role of the weights. However, with many parameters
+and a non-convex objective, the model can overfit.
+\subsection{Learning Frequencies from Data}
+\begin{equation}
+  \log p(\mathbf{y}|\theta) = -\frac{1}{2\sigma_n^2}\left(\|\mathbf{y}\|^2 - \|\alpha_1\|^2\right) - \frac{1}{2}\sum_i \log R_{ii}^2 + m\log\frac{m\sigma_n^2}{\sigma_f^2} - \frac{n}{2}\log(2\pi \sigma_n^2),
+\end{equation}
+where $R = \operatorname{chol}(A)$, $A = \Phi_x^\top \Phi_x + \tfrac{m\sigma_n^2}{\sigma_f^2}\, I_{2m}$, and $\alpha_1$ solves $R\alpha_1 = \Phi_x^\top \mathbf{y}$.
+
+\begin{equation}
+  \Omega \leftarrow \Omega + \eta \cdot \mathrm{ADAM}\!\left( \frac{\partial \log p(\mathbf{y}|\theta)}{\partial \Omega} \right),
+\end{equation}
+where $\eta$ is the learning rate and the gradient is computed automatically via backpropagation through the feature map.
+
+\subsection{Regularisation via Gaussian Dropout}
+
+Standard dropout does not work well here because of the cos/sin
+transformations. Gaussian dropout \citep{srivastava2014dropout,
+baldi2013understanding} is used instead: multiply $\Omega$ by element-wise
+noise drawn from $\mathcal{N}(1, \sigma_p^2)$. This preserves the expected
+value of the covariance matrix, prevents co-adaptation of frequencies, and
+improves robustness to noise. As additional regularisation, early stopping
+\citep{prechelt1998early} monitors the cross-validation error. The dropout
+noise $\sigma_p$ and the learning rate are chosen by random search over 500
+samples.
+\begin{equation}
+  \{(\boldsymbol{\omega}^1_k, \boldsymbol{\omega}^2_k)_\eta\}_{k=1}^{m} = \mathcal{N}(1, \sigma_p^2) \odot \{(\boldsymbol{\omega}^1_k, \boldsymbol{\omega}^2_k)\}_{k=1}^{m},
+\end{equation}
+where $\odot$ denotes elementwise multiplication and $\sigma_p$ controls the regularisation strength.
+
 
 \section{Experiments}
 
@@ -118,12 +174,33 @@ The selected paper connects this spectral view to Fourier features. It states th
 
 \subsection{Strengths}
 
-% Add strengths here.
+\subsubsection{No additional computational cost}
+Based on the method, the cost drops from $O(n^3)$ to $O(nm^2)$ with $m \ll n$.
+It helps to reduce the computation time. Real-world spatial datasets can have
+millions of points, and this improves the time efficiency, while also lowering
+computer memory requirements.
 
+\subsubsection{Kernel learned directly from data}
+% Add strengths here.
+In the traditional approach, the hyperparameters need to be guessed before
+processing. For example,
+\begin{equation}
+  k(\mathbf{x}_1, \mathbf{x}_2) = \sigma_f^2 \exp\!\left(-\frac{\|\mathbf{x}_1 - \mathbf{x}_2\|^2}{2\ell^2}\right).
+\end{equation}
+With this paper's approach, no kernel family needs to be chosen anymore. The
+frequencies $\boldsymbol{\omega}^1_k, \boldsymbol{\omega}^2_k$ are learned
+from the data directly.
+
+\subsubsection{Nonstationarity}
+Traditional Gaussian process regression requires many assumptions. It can
+only be used for stationary kernels. This paper's proposed method can also be
+used for nonstationary kernels, which more precisely simulate and predict
+real-life applications, just like the temperature in East Africa shown in
+the experiment.
 \subsection{Limitations}
 
 % Add limitations here.
-
+\subsubsection{Fine-scale spatial detail not fully captured}
 \subsection{Possible Extensions}
 
 % Add possible extensions here.

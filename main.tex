@@ -44,14 +44,11 @@ describe how observations at different inputs are related. As Ton et al. note,
 ``The use of covariance kernels is ubiquitous in the field of spatial
 statistics'' \citep[p.~59]{ton2018spatial}.
 
-A common choice in Gaussian process modelling is to use stationary kernels, such
-as the Mat\'ern kernel or the squared exponential kernel. These kernels assume that the
-covariance between two inputs depends only on their relative displacement, not on
-their absolute locations. This assumption is mathematically convenient and often
-works well, but it can be restrictive for real spatial data. In many applications,
-the dependence structure changes across the domain: nearby observations may be
-strongly correlated in one region and weakly correlated in another. Therefore,
-fixed stationary kernels may fail to represent important spatial variation.
+A usual starting point for GP modelling is to choose a stationary kernel, such as
+a Mat\'ern or squared exponential kernel. However, this also means that the shape
+of the covariance function is mostly fixed before seeing the data. In real spatial
+or temporal data, the dependence may not have the same pattern everywhere. The
+paper studies this problem by learning nonstationary kernels from data.
 
 The selected paper aims to address this limitation by constructing more flexible
 Gaussian process models through nonstationary Fourier feature representations.

@@ -35,11 +35,34 @@ This report summarizes the paper ``Spatial mapping with Gaussian processes and n
 
 \section{Introduction}
 
-% Introduce the selected paper/topic here.
+Spatial mapping is concerned with learning and predicting quantities that vary
+over space or time from a limited number of observations. Examples include
+environmental variables, disease risk, temperature fields, and financial time
+series. Gaussian process models are a natural tool for this type of problem
+because they define a distribution over functions and use a covariance kernel to
+describe how observations at different inputs are related. As Ton et al. note,
+``The use of covariance kernels is ubiquitous in the field of spatial
+statistics'' \citep[p.~59]{ton2018spatial}.
 
-\begin{quote}
-``The use of covariance kernels is ubiquitous in the field of spatial statistics'' \citep[p.~59]{ton2018spatial}.
-\end{quote}
+A common choice in Gaussian process modelling is to use stationary kernels, such
+as the Mat\'ern kernel or the squared exponential kernel. These kernels assume that the
+covariance between two inputs depends only on their relative displacement, not on
+their absolute locations. This assumption is mathematically convenient and often
+works well, but it can be restrictive for real spatial data. In many applications,
+the dependence structure changes across the domain: nearby observations may be
+strongly correlated in one region and weakly correlated in another. Therefore,
+fixed stationary kernels may fail to represent important spatial variation.
+
+The selected paper aims to address this limitation by constructing more flexible
+Gaussian process models through nonstationary Fourier feature representations.
+The main idea is to learn kernel structure directly from data while retaining the
+computational advantages of finite feature representations. This report first
+reviews the background on Gaussian random fields, stationary kernels, and
+spectral representations. It then summarizes the proposed method, including the
+nonstationary extension, data-driven frequency learning, and regularisation.
+Finally, it discusses the experiments on Google stock prices and East African
+land surface temperature, followed by the strengths, limitations, and possible
+extensions of the approach.
 
 \section{Background}
 
